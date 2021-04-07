@@ -15,24 +15,39 @@ data <- read.csv("data.csv")
 data <- data%>%
     mutate(stack = as.factor(stack))
 
-stack <- setNames(as.list(data$stack), data$stack)
+############################
 
-### UI
 ui <- fluidPage(
-    selectInput("stack_choice", label = "Select Twitter Name", choices = stack),
-    DT::dataTableOutput("mytable")
+  sidebarLayout(
+    mainPanel(
+
+      selectInput("pickvalue", label = "Choose your twitter name to see your stack", unique(data$stack),
+                  selected = "NULL", multiple = F)),
+
+
+    tableOutput("tableOut")
+
+  )
 )
 
-# Define server logic required to draw a histogram
-server <- function(input, output) {
-  react_dat <- reactive({
-    dat <- data %>% filter(input$stack_choice %in% data$stack)
+
+server <- function(input, output, session){
+
+
+  gears <- reactive({
+
+    dat <- data
+
+    if (!is.null(input$pickvalue)){dat <- dat %>% filter(stack %in% input$pickvalue)}
+
+    dat <- dat
+
     return(dat)
+
   })
-  output$mytable = DT::renderDataTable({
-    react_dat
-  })
+
+  output$tableOut<- renderTable({gears()})
+
 }
 
-# Run the application
-shinyApp(ui = ui, server = server)
+shinyApp(ui = ui, server=server)
