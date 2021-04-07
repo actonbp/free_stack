@@ -9,7 +9,6 @@
 
 library(shiny)
 library(dplyr)
-library(DT)
 data <- read.csv("data.csv")
 
 data <- data%>%
