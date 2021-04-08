@@ -1,0 +1,13 @@
+name: free_stack
+title: free_stack
+username:
+account: actonbp
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3921389
+bundleId: 4444578
+url: https://actonbp.shinyapps.io/free_stack/
+when: 1617851804.63781
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: pg.R
